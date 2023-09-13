@@ -1,0 +1,10 @@
+KURULUM:
+PHP VE COMPOSER İNDİR.
+"composer global require laravel/installer" KOMUTUNU ÇALIŞTIR.
+"laravel new <proje_ismi>" KOMUTU İLE İSTEDİĞİNE YERDE PROJE OLUŞTUR.
+
+GELİŞTİRME:
+
+
+ÇALIŞTIRMA:
+"php artisan serve" KOMUTU İLE ÇALIŞTIR.
