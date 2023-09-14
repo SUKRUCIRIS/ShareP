@@ -1,10 +1,28 @@
 KURULUM:
 PHP VE COMPOSER İNDİR.
 "composer global require laravel/installer" KOMUTUNU ÇALIŞTIR.
-"laravel new <proje_ismi>" KOMUTU İLE İSTEDİĞİNE YERDE PROJE OLUŞTUR.
+"laravel new <proje_ismi>" KOMUTU İLE İSTEDİĞİN YERDE PROJE OLUŞTUR.
 
 GELİŞTİRME:
-
+"app/Http/Controllers/Controller.php" dosyası içinde kontrolcüler oluşturulur.
+"app/Models/" klasörü içinde modeller oluşturulur.
+"resources/views/" klasörü içinde ön yüz dosyaları yer alır. Dosyalar ".blade.php" ile bitmeli.
+"routes/web.php" dosyası içinde ön yüz için adresleme yapılır.
+"php artisan make:controller <isim>" komutu ile yeni controller oluşturulur.
+Controllerdaki fonksiyonları use ile include ederek web.php dosyasında kullanabiliriz:
+Route::get("/main/{parametre}",[class_ismi::class,"fonksiyon_ismi"]);//{parametre} parametredir fonksiyon otomatik kullanır aynı isimdeyse
+view('ornek',['ad'=>$isim]); ile blade dosyasına parametre verilebilir. Dosya içinde {{$ad}} ile kullanılabilir. <?php echo $ad; ?> ile aynıdır.
+"@csrf" ile blade dosyası içindeki formda otomatik token oluşturulur. Laravelde token zorunlu.
+Route::post ile form verileri alınabilir.
+public function sonuc(Request $formdata){return $formdata->metin;}; Request yapısı ile controller içindeki fonksiyonda form datası çekilebilir.
+"php artisan make:middleware <isim>" komutu ile yeni middleware oluşturulur. Daha sonra bu Kernel.php dosyasına isim ile eklenmeli.
+Middleware controllerdan önce çalıştırılıp, form bilgilerinde çeşitli kontroller yaptırılabilir. Eğer bazı şartları sağlamıyorsa controller çalştırılmayabilir.
+Route::middleware('middleware_kernel_ismi')->post('/form_sonuc',[controller_class_ismi::class,"fonksiyon_ismi"]);
+Mesela middleware form inputu gerekli şartları sağlamıyorsa "return redirect()->back();" ile önceki yere dönülmesini sağlayabilir.
+.env dosyasında database ile ilgili ayarlar kurulabilir.
+Migration uygulamanın kullanacağı tabloları otomatik oluşturmak anlamına gelir.
+"php artisan make:migration <dosya_ismi> --create=<tablo_ismi>"
+"php artisan migrate" komutu ile tablolar otomatik oluşturulur.
 
 ÇALIŞTIRMA:
 "php artisan serve" KOMUTU İLE ÇALIŞTIR.
