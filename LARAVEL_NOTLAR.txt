@@ -14,7 +14,7 @@ Route::get("/main/{parametre}",[class_ismi::class,"fonksiyon_ismi"]);//{parametr
 view('ornek',['ad'=>$isim]); ile blade dosyasına parametre verilebilir. Dosya içinde {{$ad}} ile kullanılabilir. <?php echo $ad; ?> ile aynıdır.
 "@csrf" ile blade dosyası içindeki formda otomatik token oluşturulur. Laravelde token zorunlu.
 Route::post ile form verileri alınabilir.
-public function sonuc(Request $formdata){return $formdata->metin;}; Request yapısı ile controller içindeki fonksiyonda form datası çekilebilir.
+public function sonuc(Request $formdata){return $formdata->metin(htmlde input un name i ne ise o kullanılır);}; Request yapısı ile controller içindeki fonksiyonda form datası çekilebilir.
 "php artisan make:middleware <isim>" komutu ile yeni middleware oluşturulur. Daha sonra bu Kernel.php dosyasına isim ile eklenmeli.
 Middleware controllerdan önce çalıştırılıp, form bilgilerinde çeşitli kontroller yaptırılabilir. Eğer bazı şartları sağlamıyorsa controller çalştırılmayabilir.
 Route::middleware('middleware_kernel_ismi')->post('/form_sonuc',[controller_class_ismi::class,"fonksiyon_ismi"]);
@@ -23,6 +23,34 @@ Mesela middleware form inputu gerekli şartları sağlamıyorsa "return redirect
 Migration uygulamanın kullanacağı tabloları otomatik oluşturmak anlamına gelir.
 "php artisan make:migration <dosya_ismi> --create=<tablo_ismi>"
 "php artisan migrate" komutu ile tablolar otomatik oluşturulur.
+Kontroller içinde "use DB;" ile DB kütüphanesi kullanılabilir. DB kütüphanesi ile çeşitli database işlemleri yapılır.
+Bir tabloya ekleme yapan örnek fonksiyon:
+public function insert(){
+	DB::table("table_name")->insert([
+		"column_name"=>value
+	]);
+}
+public function update(){
+	DB::table("table_name")->where("id",1)->update([
+		"column_name"=>value
+	]);
+}
+public function delete(){
+	DB::table("table_name")->where("id",1)->delete();
+}
+public function get(){
+	$data=DB::table("table_name")->get();
+	$data=DB::table("table_name")->where("id",1)->first();
+}
+Model kullanarak daha kolay bir şekilde verileri okuyabiliriz.
+"php artisan make:model <model_ismi>" ile model oluşturulur.
+Model classına "protected $table="tablo_ismi";" değişkeni ile tablo ismi eklenmeli.
+"protected $fillable=["kolon_ismi"];" ile doldurulabilir kolon isimleri eklenmeli.
+Bu model class'ını DB::table() yerine direkt koyarak kullanabilirim.
+model::find(2); idsi 2 olan satırı getirir.
+model::create(["kolon"=>value,]); tabloya yeni satır ekler.
+model::whereId(4)->update(["kolon"=>value,]); tabloda idsi 4 olan satırı günceller.
+model::whereId(4)->delete(); tabloda idsi 4 olan satırı siler.
 
 ÇALIŞTIRMA:
 "php artisan serve" KOMUTU İLE ÇALIŞTIR.
